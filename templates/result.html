@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result - License Plate Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6f61, #d3a4f4, #6b48ff);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 700px;
+            animation: zoomIn 1s ease-out;
+        }
+
+        h2 {
+            color: #6b48ff;
+            margin-bottom: 20px;
+            animation: slideIn 1s ease-in-out;
+        }
+
+        .result-info {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        strong {
+            color: #ff6f61;
+        }
+
+        img {
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+        }
+
+        .info-section {
+            margin-top: 30px;
+            background: linear-gradient(135deg, #f4e1d2, #fce4ec);
+            padding: 20px;
+            border-radius: 10px;
+            color: #333;
+            animation: slideUp 1.2s ease-in-out;
+        }
+
+        .info-section h3 {
+            color: #6b48ff;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 12px 28px;
+            background-color: #6b48ff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4b2f9e;
+        }
+
+        .thanks-message {
+            margin-top: 40px;
+            font-size: 22px;
+            color: #1b5e20;
+            animation: blink 1.5s infinite;
+        }
+
+        .thanks-text {
+            margin-top: 20px;
+            font-size: 28px;
+            color: #6b48ff;
+            animation: bounceIn 1s ease-out infinite;
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {transform: translateY(-20px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        @keyframes slideUp {
+            from {transform: translateY(40px); opacity: 0;}
+            to {transform: translateY(0); opacity: 1;}
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🔍 Recognition Result</h2>
+        <p class="result-info">License Plate Detected: <strong>{{ result }}</strong></p>
+        <p class="result-info">Extracted Text: <strong>{{ text }}</strong></p>
+
+        {% if image_path %}
+        {% endif %}
+
+        <div class="info-section">
+            <h3>About Vehicle Number Plates</h3>
+            <p>Indian vehicle number plates follow a format like <strong>TN22GH1111</strong>:</p>
+            <ul style="text-align:left;">
+                <li><strong>TN</strong> - State code (Tamil Nadu)</li>
+                <li><strong>22</strong> - RTO zone code</li>
+                <li><strong>GH</strong> - Series</li>
+                <li><strong>1111</strong> - Unique vehicle number</li>
+            </ul>
+            <p>This system uses AI and OCR to detect and verify authenticity from a trusted dataset.</p>
+        </div>
+
+        <a href="/"><button>Check Another</button></a>
+
+        <div class="thanks-message">
+            🙏 Thank You for Using Our AI Recognition System!
+        </div>
+
+        <div class="thanks-text">Thank You!</div>
+    </div>
+</body>
+</html>

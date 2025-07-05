@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>License Plate Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ff6f61, #d3a4f4, #6b48ff);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in;
+        }
+
+        h1 {
+            color: #6b48ff;
+            margin-bottom: 10px;
+            text-align: center;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .subtitle {
+            color: #ff6f61;
+            margin-bottom: 30px;
+            text-align: center;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        .upload-form {
+            text-align: center;
+        }
+
+        .upload-form input[type="file"] {
+            padding: 12px;
+            border-radius: 10px;
+            margin: 15px 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid #6b48ff;
+            background: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .upload-form input[type="file"]:hover {
+            border-color: #ff6f61;
+            transform: scale(1.05);
+        }
+
+        .upload-form button {
+            background: linear-gradient(135deg, #6b48ff, #ff6f61);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 15px 0;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideUp 1s ease-out;
+        }
+
+        .upload-form button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(107, 72, 255, 0.4);
+        }
+
+        .description {
+            margin-top: 40px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .description h2 {
+            color: #6b48ff;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .description ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        .description ul li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #333;
+        }
+
+        .description ul li::before {
+            content: "✨";
+            position: absolute;
+            left: 0;
+            color: #ff6f61;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
+
+        .animation-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .uploading-animation, .redirecting-animation {
+            display: none;
+            width: 60px;
+            margin: 20px auto;
+        }
+
+        .uploading-animation {
+            animation: spin 1s linear infinite;
+        }
+
+        .redirecting-animation {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 License Plate Recognition System</h1>
+        <p class="subtitle">Check vehicle numbers from uploaded images</p>
+        <form method="POST" enctype="multipart/form-data" class="upload-form">
+            <input type="file" name="file" accept="image/*" required>
+            <button type="submit">Detect & Check</button>
+        </form>
+
+        <div class="animation-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/1477/1477007.png" alt="Uploading" class="uploading-animation" id="uploadingImg">
+            <img src="https://cdn-icons-png.flaticon.com/512/1477/1477011.png" alt="Redirecting" class="redirecting-animation" id="redirectingImg">
+        </div>
+
+        <div class="description">
+            <h2>About This Project</h2>
+            <p>This License Plate Recognition (LPR) system uses computer vision and OCR technology to extract and validate number plates from vehicle images.</p>
+            <ul>
+                <li>🔍 Uses OpenCV for image preprocessing (grayscale, noise reduction, edge detection)</li>
+                <li>🧠 Tesseract OCR for character recognition</li>
+                <li>📁 Cross-checks results with a CSV database to detect duplicates or validate entries</li>
+                <li>🚦 Useful for parking systems, toll booths, traffic control, and security</li>
+            </ul>
+            <p class="footer">Designed using Python Flask • Lightweight & efficient • Open-source alternative to commercial LPR systems</p>
+        </div>
+    </div>
+
+    <script>
+        const form = document.querySelector('.upload-form');
+        const uploadingImg = document.getElementById('uploadingImg');
+        const redirectingImg = document.getElementById('redirectingImg');
+
+        form.addEventListener('submit', function(e) {
+            uploadingImg.style.display = 'block';
+
+            // Simulate upload process
+            setTimeout(() => {
+                uploadingImg.style.display = 'none';
+                redirectingImg.style.display = 'block';
+
+                // Simulate redirect to result page
+                setTimeout(() => {
+                    redirectingImg.style.display = 'none';
+                }, 2000);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
