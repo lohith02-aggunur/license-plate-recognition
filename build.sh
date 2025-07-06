@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Install system dependencies (Tesseract OCR)
+# Install Tesseract OCR (for Linux on Render)
 apt-get update && apt-get install -y tesseract-ocr
 
 # Install Python dependencies
