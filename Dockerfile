@@ -1,24 +1,21 @@
-# Use official Python base image
+# Use official Python image
 FROM python:3.10-slim
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    tesseract-ocr \
-    libgl1 \
-    && apt-get clean
+# Install tesseract-ocr
+RUN apt-get update && apt-get install -y tesseract-ocr
 
-# Set working directory
+# Set work directory
 WORKDIR /app
 
-# Copy app files
+# Copy all files
 COPY . .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
-# Expose port (used by Render)
-ENV PORT=8000
-EXPOSE 8000
+# Expose port (Flask default)
+EXPOSE 5000
 
-# Run the app with Gunicorn
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000"]
+# Run the app
+CMD ["python", "app.py"]
