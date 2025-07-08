@@ -1,5 +1,6 @@
 services:
   - type: web
-    name: license-plate-app
-    env: docker
-    plan: free
+    name: license-plate-recognition
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn app:app
