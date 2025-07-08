@@ -7,6 +7,7 @@ from difflib import SequenceMatcher
 
 # You can comment this line since Render installs tesseract via build.sh
 # pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract"
 
 app = Flask(__name__)
 
